@@ -50,6 +50,38 @@ html, body {
     cursor: pointer;
 }
 
+.chosenImage {
+    width: 150px;
+    height: 130px;
+    text-align: center;
+    font-size: 15px;
+    background-color: #fff;
+    border: 2px solid green;
+    float: left;
+}
+
+.enemyImage {
+    width: 150px;
+    height: 130px;
+    text-align: center;
+    font-size: 15px;
+    background-color: red;
+    border: 2px solid #000;
+    float: left;
+    cursor: pointer;
+}
+
+.defenderImage {
+    width: 150px;
+    height: 130px;
+    text-align: center;
+    font-size: 15px;
+    background-color: #000;
+    border: 2px solid green;
+    color: #fff;
+    float: left;
+}
+
 #stats {
     font-size: 18px;
 }
@@ -76,3 +108,15 @@ h3 {
     font-size: 26px;
 }
 
+#resetButton {
+    width: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 30px 250px;
+    color: #000;
+    background-color: rgb(69, 158, 106);
+    border: solid #000 3px;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
