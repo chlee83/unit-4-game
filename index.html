@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Wars RPG</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+    <!-- Added link to the jQuery Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+            <div class="leftSide">
+                <!-- starting characters -->
+                <div class="row" id="starting-characters">
+                  <div id="obiwan" name="Obi-Wan Kenobi" class="character" hp="120" ap="0" cp="15">
+                    <p>Obi-Wan Kenobi</p>
+                    <img src='assets/images/obiwan.jpg'>
+                    <span>120</span>
+                  </div>
+                  <div id="luke" name="Luke Skywalker" class="character" hp="150" ap="0" cp="20">
+                    <p>Luke Skywalker</p>
+                    <img src='assets/images/luke.jpg'>
+                    <span>150</span>
+                  </div>
+                  <div id="vader" name="Darth Vader" class="character" hp="180" ap="0" cp="25">
+                    <p>Darth Vader</p>
+                    <img src='assets/images/vader.jpg'>
+                    <span>180</span>
+                  </div>
+                  <div id="boba" name="Boba Fett" class="character" hp="100" ap="0" cp="5">
+                    <p>Boba Fett</p>
+                    <img src='assets/images/boba.jpg'>
+                    <span>100</span>
+                  </div>
+                </div>
+
+                <!-- Your character -->
+                <div class="row yourCharacter">
+                    <h3>Your Character</h3>
+                     <span id="your-character"></span>
+                </div>
+
+                <!-- Enemies available to attack -->
+                <div class="row">
+                    <h3>Enemies Available To Attack</h3>
+                    <span id="enemies-avail"></span>
+                </div>
+                
+                <!-- Fight Section -->
+                <div class="row">
+                    <h3>Fight Section</h3>
+                    <button id="attack-button">Attack</button>
+                </div>  
+
+                <!-- Defender  -->
+                <div class="row">
+                    <h3>Defender</h3>
+                    <span id="defender"></span><br>
+                </div>  
+                <div class="row">
+                    <span id="stats"></span>
+                </div>
+                
+                <!-- Attack info -->
+                <div class="row">
+                    <span id="attack-info"></span>
+                </div>  
+            </div>
+
+
+
+            <!-- Name of Game -->
+            <div class="mainTitle">
+                <h1>Star Wars Battle!</h1>
+            </div>
+
+    </div>
+
+
+
+
+
+<script type="text/javascript" src="assets/javascript/game.js">
+
+</script>
+
+
+
+</body>
+
+</html>
