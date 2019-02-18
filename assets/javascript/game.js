@@ -3,24 +3,43 @@ $(document).ready(function() {
 
 //variables for who's chosen
 var characterChosen = false;
+
 var enemyChosen = false;
 var enemyTwoChosen = false;
 var enemyThreeChosen = false;
 
-//variables to give class tags too
+var defenderOneDead = false;
+var defenderTwoDead = false;
+
+//variables for game
 var chosenImage;
 var enemyImage;
-var enemyTwoImage;
-var enemyThreeImage;
 
-var enemyOne = false;
-var enemyTwo = false;
-var enemyThree = false;
+var chosenName; 
+var chosenHP; 
+var chosenAP; 
+var chosenCP; 
 
-//click function that that starts the game
+var enemyName;
+var enemyHP;
+var enemyAP;
+var enemyCP;
+
+var enemyTwoName;
+var enemyTwoHP;
+var enemyTwoAP;
+var enemyTwoCP;
+
+var enemyThreeName;
+var enemyThreeHP;
+var enemyThreeAP;
+var enemyThreeCP;
+
+
+//click function that that starts the game by picking user's character
 $(".character").on("click", function() {
 
-    //choose first character to be moved into Your Character slot and others in enemies slot
+    //if no one hasn't been chosen yet choose first character
     if (!characterChosen && !enemyChosen && !enemyTwoChosen && !enemyThreeChosen) {
         
         //give the id attribute from the chosen character and assign it to chosenImage variable
@@ -100,33 +119,12 @@ $(".character").on("click", function() {
 
     
 });
-    
-var chosenName; 
-var chosenHP; 
-var chosenAP; 
-var chosenCP; 
 
-var enemyName;
-var enemyHP;
-var enemyAP;
-var enemyCP;
 
-var enemyTwoName;
-var enemyTwoHP;
-var enemyTwoAP;
-var enemyTwoCP;
-
-var enemyThreeName;
-var enemyThreeHP;
-var enemyThreeAP;
-var enemyThreeCP;
-
-var defenderOneDead = false;
-var defenderTwoDead = false;
-
+//function for first defender
 function firstDefender() {
 
-    //give variables for each chosen character and defender's stats
+    //assigns variables for each chosen character and defender's stats
     chosenName = $(".chosenImage").attr("name")
     chosenHP = $(".chosenImage").attr("hp")
     chosenAP = $(".chosenImage").attr("ap")
@@ -137,20 +135,23 @@ function firstDefender() {
     enemyAP = $(".defenderImage").attr("ap")
     enemyCP = $(".defenderImage").attr("cp")
 
+    //console log to see if values are displayed correctly
     console.log(chosenName + " " + chosenHP + " " + chosenAP + " " + chosenCP)
     console.log(enemyName + " " + enemyHP + " " + enemyAP + " " + enemyCP)
 
+   
         //once characters are set, attack button can be clicked to start battle
-        $("#attack-button").on("click", function() {
+        $(".attack-button").on("click", function() {
 
-            //Both player and enemy is chosen, attack only occurs when defender's HP is greater than or equal to 0
-            if (enemyHP > 0 && chosenHP > 0) {
+            //Attack only occurs when defender's HP and chosen character's HP is greater than 0 
+            if (enemyHP > 0 && !defenderOneDead && !defenderTwoDead && !enemyTwoChosen) {
 
-                //make HP of character and enemy decreace according to the attack power and counter power
+                //make HP of character and enemy decrease according to the attack power and counter power
                 chosenHP -= enemyCP;
-                chosenAP = parseInt(chosenAP) + 8;
+                chosenAP = parseInt(chosenAP) + 10;
                 enemyHP -= chosenAP;
 
+                //console HP and AP after attacks
                 console.log(chosenHP + " " + chosenAP + " " + enemyHP);
 
                 //selecting the span in the div with class of chosenImage and enemyImage to input their current health
@@ -160,35 +161,29 @@ function firstDefender() {
                 //input current attack and health info under defender image
                 $("#stats").html("<div>" + "You attacked " + enemyName + " for " + chosenAP + " damage." + "</div>" + "<div>" + enemyName + " attacked you back for " + enemyCP + " damage." + "</div>")
                 
+                //if enemy's HP goes below zero, do this
                 if (enemyHP <= 0) {
 
                     //remove enemy's image and clear stats text
-                    $(".defenderImage").remove();
-                    $("#stats").html("");
-    
-                } 
-                
-            // if chosen player's health goes down to zero or below, game is over and game reloads
-            } else if (chosenHP <= 0) {
+                    $("#defender").html("Pick another defender.");
 
-                alert("GAME OVER!");
-                location.reload();
-
-            } else if (enemyHP <= 0 && !defenderOneDead && !defenderTwoDead && !enemyTwoChosen) {
-
-                // once defender is gone, attack button will only display text to pick new defender
-                $("#attack-button").on("click", function() {
-
-                    $("#defender").html("Pick a second defender.");
+                    //make defender one dead
                     defenderOneDead = true;
-                });
+                    
+                //if chosen player HP goes below zero, game over alert then reload game.
+                } else if (chosenHP <= 0) {
 
+                    alert("You Lost! GAME OVER!");
+                    location.reload();
+    
+                }
+                
             } 
 
         });
-
+    
   
-    }
+}
     
 
 function secondDefender() {
@@ -202,14 +197,14 @@ function secondDefender() {
     console.log(enemyTwoName + " " + enemyTwoHP + " " + enemyTwoAP + " " + enemyTwoCP)
 
         //once characters are set, attack button can be clicked to start battle
-        $("#attack-button").on("click", function() {
-
+        $(".attack-button").on("click", function() {
+            
             //Both player and enemy is chosen, attack only occurs when defender's HP is greater than or equal to 0
             if (enemyTwoHP > 0 && chosenHP > 0 && defenderOneDead && !defenderTwoDead) {
 
                 //make HP of character and enemy decreace according to the attack power and counter power
                 chosenHP -= enemyTwoCP;
-                chosenAP = parseInt(chosenAP) + 8;
+                chosenAP = parseInt(chosenAP) + 10;
                 enemyTwoHP -= chosenAP;
 
                 console.log(chosenHP + " " + chosenAP + " " + enemyTwoHP);
@@ -221,30 +216,21 @@ function secondDefender() {
                 //input current attack and health info under defender image
                 $("#stats").html("<div>" + "You attacked " + enemyTwoName + " for " + chosenAP + " damage." + "</div>" + "<div>" + enemyTwoName + " attacked you back for " + enemyTwoCP + " damage." + "</div>")
                 
-                if (enemyTwoHP <= 0 && defenderOneDead && !defenderTwoDead) {
+                if (enemyTwoHP <= 0 && chosenHP > 0 && defenderOneDead && !defenderTwoDead) {
 
                     //remove enemy's image and clear stats text
-                    $(".defenderImage").remove();
-                    $("#stats").html("");
+                    $("#defender").html("Pick another defender.");
+
                     defenderTwoDead = true;
+    
+                } else if (chosenHP <= 0) {
+
+                    alert("GAME OVER!");
+                    location.reload();
     
                 } 
                 
-            // if chosen player's health goes down to zero or below, game is over and game reloads
-            } else if (chosenHP <= 0) {
-
-                alert("GAME OVER!");
-                location.reload();
-
-            } else if (enemyTwoHP <= 0 && defenderOneDead && defenderTwoDead) {
-
-                // once defender is gone, attack button will only display text to pick new defender
-                $("#attack-button").on("click", function() {
-    
-                    $("#defender").html("Pick the last defender.");
-                    
-                });
-
+        
             } 
             
         });
@@ -264,14 +250,14 @@ function thirdDefender() {
     console.log(enemyThreeName + " " + enemyThreeHP + " " + enemyThreeAP + " " + enemyThreeCP)
 
         //once characters are set, attack button can be clicked to start battle
-        $("#attack-button").on("click", function() {
+        $(".attack-button").on("click", function() {
 
             //Both player and enemy is chosen, attack only occurs when defender's HP is greater than or equal to 0
             if (enemyThreeHP > 0 && chosenHP > 0) {
 
                 //make HP of character and enemy decreace according to the attack power and counter power
                 chosenHP -= enemyThreeCP;
-                chosenAP = parseInt(chosenAP) + 8;
+                chosenAP = parseInt(chosenAP) + 10;
                 enemyThreeHP -= chosenAP;
 
                 console.log(chosenHP + " " + chosenAP + " " + enemyThreeHP);
@@ -283,34 +269,44 @@ function thirdDefender() {
                 //input current attack and health info under defender image
                 $("#stats").html("<div>" + "You attacked " + enemyThreeName + " for " + chosenAP + " damage." + "</div>" + "<div>" + enemyThreeName + " attacked you back for " + enemyThreeCP + " damage." + "</div>")
                 
-                if (enemyThreeHP <= 0 && defenderOneDead && defenderTwoDead) {
+                if (enemyThreeHP <= 0 && chosenHP > 0) {
 
                     //remove enemy's image and clear stats text
                     $(".defenderImage").remove();
                     $("#stats").html("");
                     
-                    // once defender is gone, attack button will only display text to pick new defender
-                    $("#attack-button").on("click", function() {
-    
-                        $("#defender").html("You Win! Game Over!");
-                        $("#defender").append("<div id='resetButton'>Reset Game</div>");
+                    // once last defender is dead, game over
+                    $("#defender").append("You Win! Game Over!");
+                    $("#defender").append("<div id='resetButton'>Reset Game</div>");
 
-                        $("#resetButton").on("click", function() {
-                        window.location.href = window.location.href;
+                    $("#resetButton").on("click", function() {
+                    window.location.href = window.location.href;
                     });
-                    });
-    
-                } 
-                
-            // if chosen player's health goes down to zero or below, game is over and game reloads
-            } else if (chosenHP <= 0) {
+                    
+                 
 
-                alert("GAME OVER!");
-                location.reload();
+    
+                } else if (chosenHP <= 0) {
+
+                    alert("GAME OVER!");
+                    location.reload();
+    
+                }
+            } else if (enemyThreeHP <= 0 && defenderOneDead && defenderTwoDead) {
+
+                // once defender is gone, attack button will only display text to pick new defender
+                $(".attack-button").on("click", function() {
+
+                    $("#defender").html("You Win! Game Over!");
+                    $("#defender").append("<div id='resetButton'>Reset Game</div>");
+
+                    $("#resetButton").on("click", function() {
+                    window.location.href = window.location.href;
+                    });
+                });
 
             } 
-
-        })
+        });
 
     
     
